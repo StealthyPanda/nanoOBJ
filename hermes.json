@@ -1,0 +1,24 @@
+{
+    "name": "nanoOBJ",
+    "compiler": "clang",
+    "inputs": {
+        "exe": ["src/*.c", "test.c"],
+        "lib": ["src/*.c"]
+    },
+    "libincdirs": [],
+    "libs": [],
+    "libdirs": [],
+    "target": {
+        "type": "lib",
+        "run": true,
+        "exeout": ".hermes/output.exe",
+        "libout": ".hermes/libout",
+        "incdirs": ["inc"]
+    },
+    "submodules": {
+        "assrcs": [],
+        "aslibs": []
+    },
+    "copts": [],
+    "lopts": []
+}
