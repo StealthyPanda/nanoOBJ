@@ -146,7 +146,7 @@ ObjData load_obj_data(const char* fpath) {
     }
 
     printf(
-        "The object has %llu vertices, %llu normals, %llu texcoords, %llu faces.\n",
+        "The object has %zu vertices, %zu normals, %zu texcoords, %zu faces.\n",
         nverts, nnormals, ntexcoords, nfaces
     );
 
