@@ -2,6 +2,7 @@
 #pragma once
 
 #include <stdint.h>
+#include <stddef.h>
 
 typedef struct {
     int *vertexindices, *normalindices, *texcoordindices;

@@ -7,19 +7,19 @@
 
 ObjVertex _obj_read_vert(const char* buffer) {
     ObjVertex holder;
-    sscanf_s(buffer, "%f %f %f", holder.comps, holder.comps + 1, holder.comps + 2);
+    sscanf(buffer, "%f %f %f", holder.comps, holder.comps + 1, holder.comps + 2);
     return holder;
 }
 
 ObjNormal _obj_read_normal(const char* buffer) {
     ObjNormal holder;
-    sscanf_s(buffer, "%f %f %f", holder.comps, holder.comps + 1, holder.comps + 2);
+    sscanf(buffer, "%f %f %f", holder.comps, holder.comps + 1, holder.comps + 2);
     return holder;
 }
 
 ObjTexCoords _obj_read_texcoord(const char* buffer) {
     ObjTexCoords holder;
-    sscanf_s(buffer, "%f %f", holder.comps, holder.comps + 1);
+    sscanf(buffer, "%f %f", holder.comps, holder.comps + 1);
     return holder;
 }
 
@@ -117,7 +117,7 @@ ObjFace _obj_read_face(char* buffer, char* end) {
 
 ObjData load_obj_data(const char* fpath) {
     FILE* fp = NULL;
-    fopen_s(&fp, fpath, "r");
+    fp = fopen(fpath, "r");
 
     if (fp == NULL) {
         perror("Couldn't open .obj file!");

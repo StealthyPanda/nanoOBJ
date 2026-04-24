@@ -1,6 +1,8 @@
 
 #include <stdlib.h>
 
+#include <error.h>
+
 #include <raylib.h>
 #include <raymath.h>
 
