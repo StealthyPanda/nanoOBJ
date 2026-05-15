@@ -45,5 +45,3 @@ void deload_obj_data(ObjData data);
 // Pickles obj data into a given file handle
 void pickle_obj_data(ObjData data, const char *fp, const char *pn);
 
-
-

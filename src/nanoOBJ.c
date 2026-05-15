@@ -88,7 +88,7 @@ ObjFace _obj_read_face(char* buffer, char* end) {
     while ((buffer[cursor] != '\n') && (cursor < (end - buffer))) {
         
         while ((buffer[cursor] != ' ') && (cursor < (end - buffer))) 
-        cursor++;
+            cursor++;
         
         // printf("Sending in triplet:|");
         // for (char* x = buffer + prev; x < buffer + cursor; x++)
