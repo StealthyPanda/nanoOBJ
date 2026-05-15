@@ -1,25 +1,26 @@
 
 #include "../inc/nanoOBJ.h"
 
+#include <stddef.h>
 #include <stdio.h>
 #include <stdlib.h>
 
 
 ObjVertex _obj_read_vert(const char* buffer) {
     ObjVertex holder;
-    sscanf_s(buffer, "%f %f %f", holder.comps, holder.comps + 1, holder.comps + 2);
+    sscanf(buffer, "%f %f %f", holder.comps, holder.comps + 1, holder.comps + 2);
     return holder;
 }
 
 ObjNormal _obj_read_normal(const char* buffer) {
     ObjNormal holder;
-    sscanf_s(buffer, "%f %f %f", holder.comps, holder.comps + 1, holder.comps + 2);
+    sscanf(buffer, "%f %f %f", holder.comps, holder.comps + 1, holder.comps + 2);
     return holder;
 }
 
 ObjTexCoords _obj_read_texcoord(const char* buffer) {
     ObjTexCoords holder;
-    sscanf_s(buffer, "%f %f", holder.comps, holder.comps + 1);
+    sscanf(buffer, "%f %f", holder.comps, holder.comps + 1);
     return holder;
 }
 
@@ -117,7 +118,7 @@ ObjFace _obj_read_face(char* buffer, char* end) {
 
 ObjData load_obj_data(const char* fpath) {
     FILE* fp = NULL;
-    fopen_s(&fp, fpath, "r");
+    fp = fopen(fpath, "r");
 
     if (fp == NULL) {
         perror("Couldn't open .obj file!");
@@ -146,7 +147,7 @@ ObjData load_obj_data(const char* fpath) {
     }
 
     printf(
-        "The object has %llu vertices, %llu normals, %llu texcoords, %llu faces.\n",
+        "The object has %zu vertices, %zu normals, %zu texcoords, %zu faces.\n",
         nverts, nnormals, ntexcoords, nfaces
     );
 
@@ -228,5 +229,84 @@ void deload_obj_data(ObjData data) {
     free(data.texcoordarray);
     free(data.normalarray);
 }
+
+void pickle_obj_data(ObjData data, const char *fn, const char *pn) {
+    FILE *fp =  fopen(fn, "w");
+
+    fprintf(fp, "\n#pragma once\n\n");
+
+    // ------------------------------ Vertex Array -------------------------------
+    fprintf(fp, "ObjVertex %s_vertexarray[] = {\n", pn); 
+        for (size_t i = 0; i < data.vertexcount; i++) {
+            fprintf(
+                fp, 
+                "\t(ObjVertex) { .comps = { %f, %f, %f } }", 
+                data.vertexarray[i].comps[0],
+                data.vertexarray[i].comps[1],
+                data.vertexarray[i].comps[2]
+            ); 
+            if (i == (data.vertexcount - 1))
+                fprintf(fp, "\n");
+            else
+                fprintf(fp, ",\n");
+        }
+    fprintf(fp, "};\n"); 
+    // --------------------------------------------------------------------------
+   
+
+    // ------------------------------ Normal Array -------------------------------
+    fprintf(fp, "ObjNormal %s_normalarray[] = {\n", pn); 
+        for (size_t i = 0; i < data.normalcount; i++) {
+            fprintf(
+                fp, 
+                "\t(ObjNormal) { .comps = { %f, %f, %f } }", 
+                data.normalarray[i].comps[0],
+                data.normalarray[i].comps[1],
+                data.normalarray[i].comps[2]
+            ); 
+            if (i == (data.normalcount - 1))
+                fprintf(fp, "\n");
+            else
+                fprintf(fp, ",\n");
+        }
+    fprintf(fp, "};\n"); 
+    // --------------------------------------------------------------------------
+   
+    // ------------------------------ TextureCoord Array -------------------------------
+    fprintf(fp, "ObjTexCoords %s_texcoordarray[] = {\n", pn); 
+        for (size_t i = 0; i < data.texcoordcount; i++) {
+            fprintf(
+                fp, 
+                "\t(ObjTexCoords) { .comps = { %f, %f } }",
+                data.texcoordarray[i].comps[0],
+                data.texcoordarray[i].comps[1]
+            ); 
+            if (i == (data.texcoordcount - 1))
+                fprintf(fp, "\n");
+            else
+                fprintf(fp, ",\n");
+        }
+    fprintf(fp, "};\n"); 
+    // --------------------------------------------------------------------------
+ 
+
+
+
+    fprintf(fp, "ObjData %s = {\n", pn); 
+    fprintf(fp, "\t.vertexcount = %zu,\n", data.vertexcount); 
+    fprintf(fp, "\t.vertexarray = %s_vertexarray,\n\n", pn); 
+    
+    fprintf(fp, "\t.normalcount = %zu,\n", data.normalcount); 
+    fprintf(fp, "\t.normalarray = %s_normalarray,\n\n", pn); 
+     
+    fprintf(fp, "\t.texcoordcount = %zu,\n", data.texcoordcount); 
+    fprintf(fp, "\t.texcoordcount = %s_texcoordarray,\n\n", pn); 
+    fprintf(fp, "};\n"); 
+
+
+
+    fclose(fp);
+}
+
 
 

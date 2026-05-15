@@ -2,6 +2,7 @@
 #pragma once
 
 #include <stdint.h>
+#include <stddef.h>
 
 typedef struct {
     int *vertexindices, *normalindices, *texcoordindices;
@@ -40,4 +41,9 @@ ObjData load_obj_data(const char* fpath);
 
 // Deloads (and frees all `malloc`ed data)
 void deload_obj_data(ObjData data);
+
+// Pickles obj data into a given file handle
+void pickle_obj_data(ObjData data, const char *fp, const char *pn);
+
+
 

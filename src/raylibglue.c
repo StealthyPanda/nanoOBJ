@@ -1,8 +1,10 @@
 
 #include <stdlib.h>
-
+#include <stddef.h>
 #include <raylib.h>
 #include <raymath.h>
+
+#include <stdio.h>
 
 #include "../inc/nanoOBJ.h"
 #include "../inc/raylibglue.h"
