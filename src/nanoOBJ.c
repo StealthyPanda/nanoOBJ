@@ -300,7 +300,7 @@ void pickle_obj_data(ObjData data, const char *fn, const char *pn) {
     fprintf(fp, "\t.normalarray = %s_normalarray,\n\n", pn); 
      
     fprintf(fp, "\t.texcoordcount = %zu,\n", data.texcoordcount); 
-    fprintf(fp, "\t.texcoordcount = %s_texcoordarray,\n\n", pn); 
+    fprintf(fp, "\t.texcoordarray = %s_texcoordarray,\n\n", pn); 
     fprintf(fp, "};\n"); 
 
 
